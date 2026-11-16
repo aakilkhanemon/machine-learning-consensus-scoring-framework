@@ -1,0 +1,144 @@
+"""
+Dual-Tiered Machine Learning Consensus Scoring & Sensitivity Audit Engine.
+
+Implements:
+- Tier 1: Unsupervised Consensus Method (UCM) - equal-weight arithmetic mean (16.67%)
+- Tier 2: Supervised Consensus Method (SCM) - 65% 3D structural / 35% 2D ADMET weights
+- Tier 3: Non-parametric hierarchical sorting & +/-10% perturbation robustness audit
+"""
+
+import argparse
+from pathlib import Path
+from typing import Dict
+import numpy as np
+import pandas as pd
+from scipy.stats import kendalltau
+
+from src.normalizer import normalize_receptor_subgroups, FEATURE_COLUMNS
+
+
+DEFAULT_SUPERVISED_WEIGHTS: Dict[str, float] = {
+    "Norm_GNINA_Vina": 0.25,
+    "Norm_GNINA_CNN": 0.20,
+    "Norm_MOE_Induced": 0.20,
+    "Norm_ADME": 0.12,
+    "Norm_Toxicology": 0.13,
+    "Norm_PASS": 0.10,
+}
+
+
+def compute_consensus_scores(
+    df_norm: pd.DataFrame,
+    weights: Dict[str, float] = DEFAULT_SUPERVISED_WEIGHTS,
+) -> pd.DataFrame:
+    """Computes Tier 1 (Unsupervised) and Tier 2 (Supervised) consensus indices."""
+    if not np.isclose(sum(weights.values()), 1.0):
+        raise ValueError(f"Supervised weights must sum to 1.0, got {sum(weights.values())}")
+
+    df_scored = df_norm.copy()
+    norm_cols = [f"Norm_{c}" for c in FEATURE_COLUMNS]
+
+    # Tier 1: Unsupervised Algebraic Integration (16.67% per track)
+    df_scored["Unsupervised_Score"] = df_scored[norm_cols].mean(axis=1).round(2)
+
+    # Tier 2: Supervised Pharmacokinetic/Thermodynamic Weight Bias (65:35)
+    scm_series = pd.Series(0.0, index=df_scored.index)
+    for col, weight in weights.items():
+        scm_series += df_scored[col] * weight
+    df_scored["Supervised_Score"] = scm_series.round(2)
+
+    # Hierarchical Sorting: Primary = Supervised_Score, Tie-breaker = Unsupervised_Score
+    df_scored = df_scored.sort_values(
+        by=["Receptor_ID", "Supervised_Score", "Unsupervised_Score"],
+        ascending=[True, False, False],
+    ).reset_index(drop=True)
+
+    df_scored["Receptor_Rank"] = (
+        df_scored.groupby("Receptor_ID").cumcount() + 1
+    )
+    df_scored["Final_Lead_Rank"] = df_scored["Receptor_Rank"].apply(
+        lambda r: f"Top-{r} Lead"
+    )
+    return df_scored
+
+
+def run_weight_sensitivity_audit(
+    df_scored: pd.DataFrame,
+    weights: Dict[str, float] = DEFAULT_SUPERVISED_WEIGHTS,
+    perturbation: float = 0.10,
+    n_iterations: int = 500,
+    seed: int = 42,
+) -> pd.DataFrame:
+    """
+    Performs a Monte Carlo +/-10% weight perturbation audit to verify that top-ranked
+    leads remain invariant to minor heuristic weight shifts (Reviewer robustness check).
+    """
+    rng = np.random.default_rng(seed)
+    base_keys = list(weights.keys())
+    base_vals = np.array([weights[k] for k in base_keys])
+
+    records = []
+    for receptor, group in df_scored.groupby("Receptor_ID"):
+        base_order = group["Unique_ID"].tolist()
+        top1_id = base_order[0]
+        top1_retention = 0
+        taus = []
+
+        for _ in range(n_iterations):
+            noise = rng.uniform(1.0 - perturbation, 1.0 + perturbation, size=len(base_vals))
+            w_pert = (base_vals * noise)
+            w_pert /= w_pert.sum()
+
+            pert_score = sum(group[k] * w for k, w in zip(base_keys, w_pert))
+            pert_order = group.assign(_p=pert_score).sort_values("_p", ascending=False)["Unique_ID"].tolist()
+
+            if pert_order[0] == top1_id:
+                top1_retention += 1
+
+            rank_map = {uid: i for i, uid in enumerate(pert_order)}
+            pert_ranks = [rank_map[uid] for uid in base_order]
+            tau, _ = kendalltau(range(len(base_order)), pert_ranks)
+            taus.append(tau)
+
+        records.append({
+            "Receptor_ID": receptor,
+            "Baseline_Top1_Lead": top1_id,
+            "Top1_Retention_Rate_%": round((top1_retention / n_iterations) * 100, 2),
+            "Mean_Kendall_Tau": round(float(np.nanmean(taus)), 4),
+            "SD_Kendall_Tau": round(float(np.nanstd(taus)), 4),
+        })
+
+    return pd.DataFrame(records)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="ML Consensus Lead Scoring Engine")
+    parser.add_argument("--input", type=str, required=True, help="Path to raw metrics CSV")
+    parser.add_argument("--out-dir", type=str, default="results/tables/", help="Output directory")
+    parser.add_argument("--top-k", type=int, default=3, help="Number of top leads per receptor")
+    parser.add_argument("--run-sensitivity", action="store_true", help="Run +/-10% weight audit")
+    args = parser.parse_args()
+
+    out_path = Path(args.out_dir)
+    out_path.mkdir(parents=True, exist_ok=True)
+
+    df_raw = pd.read_csv(args.input)
+    df_norm = normalize_receptor_subgroups(df_raw)
+    df_scored = compute_consensus_scores(df_norm)
+
+    # Save full consensus matrix
+    df_scored.to_csv(out_path / "consensus_ranked_all.csv", index=False)
+
+    # Save Top-K prioritized leads (Manuscript Table 1)
+    df_top = df_scored[df_scored["Receptor_Rank"] <= args.top_k].copy()
+    df_top.to_csv(out_path / "top_prioritized_leads.csv", index=False)
+    print(f"[INFO] Exported Top-{args.top_k} leads per receptor to {out_path / 'top_prioritized_leads.csv'}")
+
+    if args.run_sensitivity:
+        df_sens = run_weight_sensitivity_audit(df_scored)
+        df_sens.to_csv(out_path / "weight_sensitivity_audit.csv", index=False)
+        print(f"[INFO] Exported +/-10% weight sensitivity audit to {out_path / 'weight_sensitivity_audit.csv'}")
+
+
+if __name__ == "__main__":
+    main()
