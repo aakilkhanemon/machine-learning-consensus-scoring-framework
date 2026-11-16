@@ -1,0 +1,24 @@
+machine-learning-consensus-scoring-framework/
+├── assets/
+│   └── workflow_architecture.png        # Graphical abstract / pipeline flowchart
+├── data/
+│   ├── raw/
+│   │   └── screening_metrics_sample.csv # Raw GNINA, MOE, ADMET, and PASS scores
+│   └── processed/
+│       └── .gitkeep
+├── notebooks/
+│   └── consensus_lead_scoring_colab.ipynb # End-to-end Google Colab interactive pipeline
+├── src/
+│   ├── __init__.py
+│   ├── normalizer.py                    # Directional sign-inversion & Min-Max/Z-score scaling
+│   ├── consensus_engine.py              # Tier 1 (UCM) & Tier 2 (SCM) scoring + sensitivity analysis
+│   └── visualizer.py                    # 600 DPI Pareto scatter plots & weight-sensitivity heatmaps
+├── results/
+│   ├── figures/
+│   │   └── .gitkeep
+│   └── tables/
+│       └── .gitkeep
+├── CITATION.cff                         # GitHub academic citation metadata
+├── environment.yml                      # Pinned Conda environment
+├── LICENSE                              # MIT License
+└── README.md                            # Publication-grade documentation
