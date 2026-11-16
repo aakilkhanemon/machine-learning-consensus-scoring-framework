@@ -17,7 +17,7 @@ Official implementation of the multi-criteria machine learning consensus scoring
 
 ## Algorithmic Architecture & Multi-Criteria Decision Logic
 
-High-throughput virtual screening of structurally complex marine natural products (MNPs) frequently suffers from single-estimator bias—where static docking scores over-reward high-molecular-weight macrocycles despite pharmacokinetic or toxicological liabilities. This framework reconciles six orthogonal evaluation tracks across dual-family viral target ensembles (**SARS-CoV-2**: `3GBN`, `7BVI`, `6XHM`; **Influenza A H5N1**: `6XRA`, `4EFJ`, `3L4Q`) into a unified, dimensionless coordinate landscape ($S \in [0.00, 100.00]$):
+High-throughput virtual screening of structurally complex marine natural products (MNPs) frequently suffers from single-estimator bias—where static docking scores over-reward high-molecular-weight macrocycles despite pharmacokinetic or toxicological liabilities. This framework reconciles six orthogonal evaluation tracks across dual-family viral target ensembles (**SARS-CoV-2**; **Influenza A H5N1**`) into a unified, dimensionless coordinate landscape ($S \in [0.00, 100.00]$):
 
 1. **Tier 0: Ingestion, Directional Sign-Inversion & Feature Scaling (`src/normalizer.py`)**
    * **Spatial & Thermodynamic Tracks:** GNINA empirical Vina affinity ($\text{kcal/mol}$), GNINA 3D Convolutional Neural Network (CNN) pose probability ($0.00–1.00$), and MOE induced-fit GBVI/WSA $\Delta G$ ($\text{kcal/mol}$).
