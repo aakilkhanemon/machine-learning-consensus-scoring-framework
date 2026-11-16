@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-green.svg)](https://www.python.org/)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aakilkhanemon/machine-learning-consensus-scoring-framework/blob/main/consensus_lead_scoring_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aakilkhanemon/machine-learning-consensus-scoring-framework/blob/main/consensus_lead_scoring_colab.ipynb)]
 [![DOI](https://img.shields.io/badge/Manuscript-In_Preparation-orange.svg)](#citation)
 
 <p align="center">
