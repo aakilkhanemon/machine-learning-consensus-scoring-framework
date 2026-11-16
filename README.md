@@ -6,7 +6,7 @@
 [![DOI](https://img.shields.io/badge/Manuscript-In_Preparation-orange.svg)](#citation)
 
 <p align="center">
-  <img src="assets/.gitkeep Workflow_Architecture.png" alt="Consensus Machine Learning Scoring Architecture" width="850">
+  <img src="assets/Workflow_Architecture.png" alt="Consensus Machine Learning Scoring Architecture" width="850">
 </p>
 
 Official implementation of the multi-criteria machine learning consensus scoring and lead prioritization architecture from:  
