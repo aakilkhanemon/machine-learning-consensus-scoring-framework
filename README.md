@@ -32,7 +32,7 @@ High-throughput virtual screening of structurally complex marine natural product
    * **Formulation:** Applies a biologically constrained linear combination allocating **65% weight to 3D structural engagement** and **35% weight to 2D ADMET/safety profiles**, followed by non-parametric hierarchical tie-breaking (`Receptor_ID` $\rightarrow$ `Supervised` $\rightarrow$ `Unsupervised`):
      $$S_{\text{SCM}} = 0.25 S_{\text{Vina}} + 0.20 S_{\text{CNN}} + 0.20 S_{\text{Induced}} + 0.12 S_{\text{ADME}} + 0.13 S_{\text{Tox}} + 0.10 S_{\text{PASS}}$$
 
-4. **Tier 3: Perturbation Sensitivity Analysis (`src/consensus_engine.py`)**
+4. **Tier 3: Perturbation Sensitivity Analysis - PSA (`src/consensus_engine.py`)**
    * Validates ranking robustness against heuristic weight drift by executing Monte Carlo / systematic $\pm 10\%$ weight perturbations and reporting Kendall's $\tau$ rank correlation stability.
 
 ---
