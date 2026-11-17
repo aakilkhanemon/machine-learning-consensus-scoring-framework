@@ -1,0 +1,37 @@
+Receptor_ID,Compound_Type,Unique_ID,GNINA_Vina,GNINA_CNN,MOE_Induced,ADME,Toxicology,PASS
+Rec-1,Vidarabine Similar-1,11141317_stereo_1,26.64,44.26,20.78,91.34,78.66,100.00
+Rec-1,Remdesivir Similar-1,CID_149144215_iso_1_alt,47.60,0.00,61.45,90.00,60.00,78.57
+Rec-1,MNP Similar-1,CID_149144215_iso_1,100.00,80.33,100.00,75.00,95.00,85.71
+Rec-1,MNP Scaffold Hopping-1,MNP_Hop_Rec1,0.00,100.00,0.00,83.73,91.27,100.00
+Rec-1,MNP AI-Driven-1,AI_MNP_Rec1,30.81,95.08,45.18,93.65,50.51,0.00
+Rec-1,FDA AI-Driven-1,AI_FDA_Rec1,25.51,88.52,24.10,79.49,78.44,25.00
+Rec-2,Vidarabine Similar-1,Vid_Sim_Rec2,0.00,0.00,40.91,81.84,83.20,100.00
+Rec-2,Remdesivir Similar-1,CID_121313136,100.00,0.00,100.00,62.75,57.25,80.00
+Rec-2,MNP Similar-1,MNP_Sim_Rec2,67.27,95.83,4.92,60.00,88.73,0.00
+Rec-2,MNP Scaffold Hopping-1,MNP_Hop_Rec2,29.09,100.00,0.00,86.80,66.24,8.89
+Rec-2,MNP AI-Driven-1,AI_INV_Barettin_2_stereo_1,41.82,79.17,21.97,87.69,80.00,86.67
+Rec-2,FDA AI-Driven-1,AI_INV_Vidarabine_1_stereo_1,40.00,95.83,12.12,60.00,82.31,46.67
+Rec-3,Vidarabine Similar-1,Vid_Sim_Rec3,85.26,48.94,17.99,58.42,91.58,0.00
+Rec-3,Remdesivir Similar-1,Rem_Sim_Rec3,93.88,0.00,38.67,60.00,90.00,44.07
+Rec-3,MNP Similar-1,dieckol_analog_2,100.00,95.74,100.00,80.00,70.06,100.00
+Rec-3,MNP Scaffold Hopping-1,Homo_hop_stereo_1,82.20,100.00,0.00,71.27,75.00,22.03
+Rec-3,MNP AI-Driven-1,AI_MNP_Rec3,0.00,48.94,31.83,74.94,66.35,88.14
+Rec-3,FDA AI-Driven-1,AI_INV_Remdesivir_2_stereo_1,84.35,72.34,10.97,65.42,70.73,52.54
+Rec-4,Vidarabine Similar-1,Vid_Sim_Rec4,35.85,50.00,19.35,65.42,84.58,0.00
+Rec-4,Remdesivir Similar-1,CID_174188929,38.85,61.11,47.49,58.04,76.19,80.56
+Rec-4,MNP Similar-1,dieckol_analog_2,100.00,27.78,100.00,100.00,75.00,100.00
+Rec-4,MNP Scaffold Hopping-1,MNP_Hop_Rec4,0.00,50.00,2.76,80.00,90.00,0.00
+Rec-4,MNP AI-Driven-1,AI_MNP_Rec4,11.15,0.00,20.10,97.42,72.58,86.11
+Rec-4,FDA AI-Driven-1,AI_INV_Remdesivir_10_stereo_1,28.54,100.00,0.00,93.81,34.97,80.56
+Rec-5,Vidarabine Similar-1,57028378_stereo_1,44.40,78.33,47.41,99.27,92.38,60.00
+Rec-5,Remdesivir Similar-1,CID_135356546_iso_1,58.11,0.00,99.26,77.62,61.96,48.00
+Rec-5,MNP Similar-1,dieckol_analog_4,100.00,68.33,100.00,50.00,70.00,100.00
+Rec-5,MNP Scaffold Hopping-1,MNP_Hop_Rec5,0.00,75.00,2.96,100.00,89.99,0.00
+Rec-5,MNP AI-Driven-1,AI_MNP_Rec5,30.12,58.33,58.52,93.65,55.00,72.00
+Rec-5,FDA AI-Driven-1,AI_FDA_Rec5,1.16,100.00,0.00,85.01,50.00,0.00
+Rec-6,Vidarabine Similar-1,Vid_Sim_Rec6,28.74,100.00,56.69,87.30,66.24,15.09
+Rec-6,Remdesivir Similar-1,CID_159807623,38.32,32.00,91.08,69.08,50.92,86.79
+Rec-6,MNP Similar-1,dieckol_analog_9,42.06,100.00,100.00,46.15,33.85,100.00
+Rec-6,MNP Scaffold Hopping-1,MNP_Hop_Rec6,71.50,76.00,0.00,63.76,75.00,24.53
+Rec-6,MNP AI-Driven-1,AI_MNP_Rec6,0.00,68.00,24.84,60.00,100.00,90.57
+Rec-6,FDA AI-Driven-1,AI_INV_Vidarabine_3_stereo_1,100.00,0.00,67.52,95.00,87.70,0.00
