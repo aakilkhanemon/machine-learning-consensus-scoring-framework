@@ -14,13 +14,13 @@ Official implementation of the multi-criteria machine learning consensus scoring
 
 ---
 
-## Algorithmic Architecture & Multi-Criteria Decision Logic
+## Algorithmic Architecture and Multi-Criteria Decision Logic
 
 High-throughput virtual screening of structurally complex marine natural products (MNPs) frequently suffers from single-estimator bias—where static docking scores over-reward high-molecular-weight macrocycles despite pharmacokinetic or toxicological liabilities. This framework reconciles six orthogonal evaluation tracks across dual-family viral target ensembles (**SARS-CoV-2**; **Influenza A H5N1**`) into a unified, dimensionless coordinate landscape ($S \in [0.00, 100.00]$):
 
-1. **Tier 0: Ingestion, Directional Sign-Inversion & Feature Scaling (`src/normalizer.py`)**
+1. **Tier 0: Ingestion, Directional Sign-Inversion and Feature Scaling (`src/normalizer.py`)**
    * **Spatial & Thermodynamic Tracks:** GNINA empirical Vina affinity ($\text{kcal/mol}$), GNINA 3D Convolutional Neural Network (CNN) pose probability ($0.00–1.00$), and MOE induced-fit GBVI/WSA $\Delta G$ ($\text{kcal/mol}$).
-   * **Pharmacokinetic & Phenotypic Tracks:** SwissADME/pkCSM composite ADME score, multi-organ toxicological safety hard-stop index (Ames, hERG I/II, GHS $\text{LD}_{50}$), and Way2Drug PASS antiviral bioactivity probability ($P_a > P_i$).
+   * **Pharmacokinetic and Phenotypic Tracks:** SwissADME/pkCSM composite ADME score, multi-organ toxicological safety hard-stop index (Ames, hERG I/II, GHS $\text{LD}_{50}$), and Way2Drug PASS antiviral bioactivity probability ($P_a > P_i$).
    * **Transformation:** Lower-is-better energetic metrics undergo directional sign inversion ($X'_i = -X_i$) prior to localized receptor-subgroup Min-Max normalization.
 
 2. **Tier 1: Unsupervised Consensus Method — UCM (`src/consensus_engine.py`)**
@@ -42,13 +42,13 @@ High-throughput virtual screening of structurally complex marine natural product
 ├── assets/                 # Workflow and consensus architecture diagrams
 ├── data/
 │   ├── raw/                # Input multi-track screening matrices (CSV)
-│   └── processed/          # Normalized & ranked consensus lead tables
+│   └── processed/          # Normalized and ranked consensus lead tables
 ├── notebooks/
 │   └── consensus_lead_scoring_colab.ipynb  # Interactive Google Colab notebook
 ├── src/
 │   ├── __init__.py
-│   ├── normalizer.py       # Directional sign inversion & Min-Max scaling
-│   ├── consensus_engine.py # UCM/SCM scoring, tie-breaking & sensitivity audit
+│   ├── normalizer.py       # Directional sign inversion and Min-Max scaling
+│   ├── consensus_engine.py # UCM/SCM scoring, tie-breaking and sensitivity audit
 │   └── visualizer.py       # 600 DPI publication figures (Pareto & sensitivity plots)
 ├── results/
 │   ├── figures/            # Exported 600 DPI PNG/TIFF figures
